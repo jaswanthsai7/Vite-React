@@ -4,27 +4,18 @@ import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
 import Modal from "./Modal";
 
-export default function PostList({ isPosting,onStopPosting }) {
-  const [enteredBody, setEnteredBody] = useState("");
-  const [enteredName, setEnteredName] = useState("");
+export default function PostList({ isPosting, onStopPosting }) {
+  const [posts, setPosts] = useState([]);
 
-  function bodyChangeHandler(event) {
-    setEnteredBody(event.target.value);
-  }
-
-  function authorChangeHandler(event) {
-    setEnteredName(event.target.value);
+  function addPostHandler(postData) {
+    setPosts((prevData) => [postData, ...prevData]);
   }
 
   let modalContent;
   if (isPosting) {
     modalContent = (
-      <Modal >
-        <NewPost
-        onCancel={onStopPosting}
-          onBodyChange={bodyChangeHandler}
-          onAuthurChange={authorChangeHandler}
-        />
+      <Modal>
+        <NewPost onCancel={onStopPosting} addPostHandler={addPostHandler} />
       </Modal>
     );
   }
@@ -34,12 +25,9 @@ export default function PostList({ isPosting,onStopPosting }) {
       {isPosting && modalContent}
 
       <ul className={classes.posts}>
-        <Post author={enteredName} text={enteredBody}></Post>
-        {/*     
-    {props.posts.map((post,i) => {
-      <p>scscsc</p>
-      // <p>{post.text}</p>
-    })} */}
+        {posts.map((data, i) => (
+          <Post key={i} author={data.author} body={data.body} />
+        ))}
       </ul>
     </>
   );
