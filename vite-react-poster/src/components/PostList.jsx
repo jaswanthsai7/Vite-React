@@ -24,11 +24,17 @@ export default function PostList({ isPosting, onStopPosting }) {
     <>
       {isPosting && modalContent}
 
-      <ul className={classes.posts}>
-        {posts.map((data, i) => (
-          <Post key={i} author={data.author} body={data.body} />
-        ))}
-      </ul>
+      {posts.length > 0 ? (
+        <ul className={classes.posts}>
+          {posts.map((data, i) => (
+            <Post key={i} author={data.author} body={data.body} />
+          ))}
+        </ul>
+      ) : (
+        <div>
+          <h2>There are no posts yet!</h2> <h2>Start adding some</h2>
+        </div>
+      )}
     </>
   );
 }

@@ -25,7 +25,7 @@ export default function NewPost(props) {
       body: enteredBody,
       author: enteredName,
     };
-    props.addPostHandler(postData)
+    props.addPostHandler(postData);
     console.log(postData);
     props.onCancel();
   }

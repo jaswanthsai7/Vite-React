@@ -1,8 +1,8 @@
 import React from "react";
-import { MdPostAdd, MdMessage } from 'react-icons/md';
+import { MdPostAdd, MdMessage } from "react-icons/md";
 import classes from "./Header.module.css";
 
-export default function Header({onCreatePost}) {
+export default function Header({ onCreatePost }) {
   return (
     <header className={classes.header}>
       <h1 className={classes.logo}>
