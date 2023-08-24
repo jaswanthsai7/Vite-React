@@ -19,8 +19,9 @@ export default function PostList({ isPosting,onStopPosting }) {
   let modalContent;
   if (isPosting) {
     modalContent = (
-      <Modal onClose={onStopPosting}>
+      <Modal >
         <NewPost
+        onCancel={onStopPosting}
           onBodyChange={bodyChangeHandler}
           onAuthurChange={authorChangeHandler}
         />

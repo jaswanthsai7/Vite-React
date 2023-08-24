@@ -17,12 +17,11 @@ export default function NewPost(props) {
       </p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input
-          type="text"
-          id="name"
-          required
-          onChange={props.onAuthurChange}
-        />
+        <input type="text" id="name" required onChange={props.onAuthurChange} />
+      </p>
+      <p className={classes.actions}>
+        <button type="button" onClick={props.onCancel}>Cancel</button>
+        <button type="submit">Submit</button>
       </p>
     </form>
   );
