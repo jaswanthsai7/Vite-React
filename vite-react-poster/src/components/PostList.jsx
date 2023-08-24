@@ -4,11 +4,10 @@ import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
 import Modal from "./Modal";
 
-export default function PostList(props) {
-  console.log(props.posts);
+export default function PostList({ isPosting,onStopPosting }) {
   const [enteredBody, setEnteredBody] = useState("");
   const [enteredName, setEnteredName] = useState("");
-  
+
   function bodyChangeHandler(event) {
     setEnteredBody(event.target.value);
   }
@@ -17,16 +16,24 @@ export default function PostList(props) {
     setEnteredName(event.target.value);
   }
 
+  let modalContent;
+  if (isPosting) {
+    modalContent = (
+      <Modal onClose={onStopPosting}>
+        <NewPost
+          onBodyChange={bodyChangeHandler}
+          onAuthurChange={authorChangeHandler}
+        />
+      </Modal>
+    );
+  }
+
   return (
     <>
-     <Modal>
-     <NewPost
-        onBodyChange={bodyChangeHandler}
-        onAuthurChange={authorChangeHandler}
-      />
-     </Modal>
+      {isPosting && modalContent}
+
       <ul className={classes.posts}>
-        <Post authorName={enteredName} text={enteredBody}></Post>
+        <Post author={enteredName} text={enteredBody}></Post>
         {/*     
     {props.posts.map((post,i) => {
       <p>scscsc</p>
