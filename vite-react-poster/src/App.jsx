@@ -18,7 +18,6 @@ function App() {
   function openForm() {}
   return (
     <>
-      <h1>Hello World!</h1>
       <Header onCreatePost={showModal} />
       <main>
         <PostList isPosting={isVisible} onStopPosting={hideModalHandler} />
