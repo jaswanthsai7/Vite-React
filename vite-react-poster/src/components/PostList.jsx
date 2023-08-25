@@ -32,14 +32,19 @@ export default function PostList({ isPosting, onStopPosting }) {
       })
       .then((data) => {
         const loaded = [];
-        for (const key in data) {
-          loaded.push({
-            id: key,
-            body: data[key].body,
-            author: data[key].author,
-          });
-        }
-        setPosts(loaded);
+        const postsArray = Object.keys(data).map((key) => {
+          return { id: key, ...data[key] };
+        });
+
+        setPosts(postsArray);
+        // for (const key in data) {
+        //   loaded.push({
+        //     id: key,
+        //     body: data[key].body,
+        //     author: data[key].author,
+        //   });
+        // }
+        // setPosts(loaded);
       })
       .catch((error) => {
         console.error(error);
@@ -50,6 +55,26 @@ export default function PostList({ isPosting, onStopPosting }) {
     loadData();
     console.log(1);
   }, [loadData]);
+
+  const deletePost = async (id) => {
+    await fetch(
+      `https://vite-react-poster-default-rtdb.firebaseio.com/posts/${id}.json`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application.json" },
+      }
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    loadData();
+    // fetch(`https://blog-d8b04-default-rtdb.europe-west1.firebasedatabase.app/posts/${postName}.json`, requestOptions)
+    // .then(response => {response.json(); console.log(response)})
+    // .then(data => console.log(data));
+  };
 
   let modalContent;
   if (isPosting) {
@@ -67,7 +92,13 @@ export default function PostList({ isPosting, onStopPosting }) {
       {posts.length > 0 ? (
         <ul className={classes.posts}>
           {posts.map((data, i) => (
-            <Post key={i} author={data.author} body={data.body} />
+            <Post
+              key={i}
+              author={data.author}
+              body={data.body}
+              id={data.id}
+              deletePost={deletePost}
+            />
           ))}
         </ul>
       ) : (
